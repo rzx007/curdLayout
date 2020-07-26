@@ -1,6 +1,6 @@
 {
   "name": "curdlayout",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "private": false,
   "description": "基于Vue和iView的CURD布局,旨在减少重复编码，提升效率",
   "main": "lib/vcolorpicker.umd.min.js",
