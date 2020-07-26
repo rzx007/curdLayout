@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <button>测试按钮</button>
     <color-picker></color-picker>
   </div>
 </template>

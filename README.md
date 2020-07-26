@@ -1,5 +1,7 @@
 ## install
+```
 npm install curdlayout -S
+```
 
 ## Quick Start
 

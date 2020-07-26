@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
+import '~/theme-default/lib/button.css';
 // 导入组件库
 import curdLayout from '~/index.js'
 // 注册组件库
