@@ -1,4 +1,6 @@
-// 导入颜色选择器组件
+// 整合所有的组件，对外导出，即一个完整的组件库
+// 修改 此 文件，对整个组件库进行导出。
+// 导入组件
 import colorPicker from './color-picker'
 import curdLayout from './curd-layout'
 // 存储组件列表
