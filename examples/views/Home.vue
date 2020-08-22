@@ -1,15 +1,14 @@
 <template>
   <div class="home">
-    <button>测试按钮</button>
+    <el-button>按钮</el-button>
     <color-picker></color-picker>
   </div>
 </template>
 
 <script>
-
-
 export default {
-  name: 'Home',
- 
-}
+  name: "Home",
+};
 </script>
+<style lang="scss">
+</style>

@@ -3,10 +3,12 @@
 // 导入组件
 import colorPicker from './color-picker'
 import curdLayout from './curd-layout'
+import elButton from './button'
 // 存储组件列表
 const components = [
     colorPicker,
-    curdLayout
+    curdLayout,
+    elButton
 ]
 
 // 定义 install 方法，接收 Vue 作为参数。如果使用 use 注册插件，则所有的组件都将被注册
@@ -27,7 +29,10 @@ export default {
     install,
     // 以下是具体的组件列表
     colorPicker,
-    curdLayout
+    curdLayout,
+    elButton
 }
 
-// 参考 https://www.cnblogs.com/wisewrong/p/10186611.html
+// 参考 
+
+// https://www.cnblogs.com/dongwei1/p/13285281.html?utm_source=tuicool

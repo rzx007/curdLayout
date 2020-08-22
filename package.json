@@ -3,7 +3,7 @@
   "version": "0.1.3",
   "private": false,
   "description": "基于Vue和iView的CURD布局,旨在减少重复编码，提升效率",
-  "main": "lib/vcolorpicker.umd.min.js",
+  "main": "lib/curdlayout.umd.min.js",
   "keywords": [
     "curd",
     "layout",
@@ -13,7 +13,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name vcolorpicker --dest lib packages/index.js"
+    "lib": "vue-cli-service build --target lib --name curdlayout --dest lib packages/index.js"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -31,6 +31,8 @@
     "eslint-plugin-vue": "^6.2.2",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
