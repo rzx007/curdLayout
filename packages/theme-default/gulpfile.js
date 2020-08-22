@@ -3,6 +3,7 @@ const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const cssmin = require('gulp-cssmin');
 
+//  build  sass转译为css
 function compile() {
   return src('./src/*.scss')
     .pipe(sass.sync())
@@ -13,7 +14,7 @@ function compile() {
     .pipe(cssmin())
     .pipe(dest('./lib'));
 }
-
+//  copy字体图标等等
 function copyfont() {
   return src('./src/fonts/**')
     .pipe(cssmin())
