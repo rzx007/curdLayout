@@ -4,12 +4,15 @@
 /* Break-points
  -------------------------- */
 @mixin res($key, $map: $--breakpoints) {
+
   // 循环断点Map，如果存在则返回
   @if map-has-key($map, $key) {
     @media only screen and #{inspect(map-get($map, $key))} {
       @content;
     }
-  } @else {
+  }
+
+  @else {
     @warn "Undefeined points: `#{$map}`";
   }
 }
@@ -68,6 +71,7 @@
 /* BEM
  -------------------------- */
 @mixin b($block) {
+  // el-button
   $B: $namespace+'-'+$block !global;
 
   .#{$B} {
@@ -79,6 +83,7 @@
   $E: $element !global;
   $selector: &;
   $currentSelector: "";
+
   @each $unit in $element {
     $currentSelector: #{$currentSelector + "." + $B + $element-separator + $unit + ","};
   }
@@ -91,7 +96,9 @@
         }
       }
     }
-  } @else {
+  }
+
+  @else {
     @at-root {
       #{$currentSelector} {
         @content;
@@ -103,6 +110,7 @@
 @mixin m($modifier) {
   $selector: &;
   $currentSelector: "";
+
   @each $unit in $modifier {
     $currentSelector: #{$currentSelector + & + $modifier-separator + $unit + ","};
   }
@@ -184,7 +192,6 @@
 
 @mixin pseudo($pseudo) {
   @at-root #{&}#{':#{$pseudo}'} {
-    @content
-  }
+@content
 }
-
+}
