@@ -19,6 +19,11 @@ Vue.use(VueRouter)
     path: '/slide',
     name: 'slide',
     component: () => import(/* webpackChunkName: "slide" */ '../views/slide.vue')
+  },
+  {
+    path: '/dynamic',
+    name: 'dynamic',
+    component: () => import(/* webpackChunkName: "dynamic" */ '../views/dynamic.vue')
   }
 ]
 
