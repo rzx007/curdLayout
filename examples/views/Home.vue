@@ -1,27 +1,27 @@
 <template>
-  <div class="home">
-    <el-button type="primary">按钮</el-button>
-    <color-picker></color-picker>
-      <div class="primary-border-color">
-    <el-curd-layout
+  <div class="content_view">
+    <curdLayout
       :tableOptions="tableOptions"
-      :fromOptions="fromOptions"
-      :treeOptions="treeOptions"
-      @row-click="rowClick"
-      @row-dblclick="rowDblclick"
-      @selection-change="selectionChange"
+      @on-change="getInputParams"
+      @on-select-change="selectOption"
     >
-      <template v-slot:action="Props">
-        <el-button size="small" @click="getRow(Props)">action</el-button>
+      <template v-slot:tool>
+        <!-- <Button type="success">新增</Button> -->
       </template>
-      <template v-slot:proflies="Props">
-        <el-button size="small" @click="getRow(Props)">proflies</el-button>
+      <template v-slot:pannel>
+        <!-- <Button type="primary" ghost shape="circle" icon="ios-build">公式配置</Button> -->
       </template>
       <template v-slot:operation="Props">
-        <el-button size="small" @click="getRow(Props)">operation</el-button>
+        <Button type="primary" size="small" icon="ios-barcode-outline" @click="getRow(Props,1,2)">曲线</Button>
+        <Button
+          style="margin-left: 8px;"
+          icon="ios-trending-up"
+          type="default"
+          size="small"
+          @click="getRow(Props,2,2)"
+        >结果</Button>
       </template>
-    </el-curd-layout>
-  </div>
+    </curdLayout>
   </div>
 </template>
 
@@ -29,68 +29,68 @@
 const tableOptions = {
   pageSize: 20,
   showPanelTool: true,
-  params: {},
-  dataUrl: "/data-project-management-service/project/getProject",
+  dataUrl: "",
+  isCurd: false,
+  param: {},
   columns: [
-    { type: "selection", width: 70, align: "center" },
-    { type: "index", label: "序号", align: "center", width: 80 },
     {
-      label: "用户信息",
-      align: "center",
-      headerAlign: "center",
-      children: [
-        {
-          prop: "creator",
-          label: "角色名",
-          align: "center",
-          width: 180,
-        },
-        { prop: "creator", label: "用户年龄", align: "center" },
-        { label: "用户", slot: "proflies", align: "center" },
-        { label: "操作", slot: "operation", width: 150, align: "center" },
-      ],
+      type: "expand",
+      width: 50,
+      render: (h, params) => {
+        return h(
+          "span",
+          {
+            props: {
+              row: params.row,
+            },
+          },
+          params.row.formulaString
+        );
+      },
     },
-    { label: "Action", slot: "action", width: 150, align: "center" },
+    { key: "index", title: "序号", width: 70, align: "center" },
+    { key: "objId", title: "母线ID", align: "center", width: 180 },
+    { key: "formulaName", title: "母线名称", align: "center", width: 220 },
+    { key: "voltAgeName", title: "电压等级", align: "center", width: 120 },
+    // { key: "formulaId", title: "公式ID", align: "center" },
+    // { key: "formulaName", title: "公式名称", align: "center" },
+    { key: "startStName", title: "所属厂站", align: "center" },
+    // { key: "formulaString", title: "分量", align: "center" },
+    { title: "操作", slot: "operation", width: 180, align: "center" },
   ],
-};
-const fromOptions = [
-  { name: "description", label: "角色描述", span: 6, type: "text" },
-  {
-    name: "occurTime",
-    label: "日期",
-    span: 6,
-    type: "date",
-    format: "yyyy-MM-dd"
-  },
-  {
-    name: "code",
-    label: "电压等级",
-    type: "select",
-    options: [],
-  },
-];
-const treeOptions = {
-  dataUrl: "/data-project-management-service/project/getProject",
+  searchDynamic: [
+    { name: "busName", label: "母线名称", type: "text" },
+    { name: "stName", label: "厂站名称", type: "text" },
+    // { name: "time", label: "日期", type: "date", format: "yyyy-MM-dd" }
+    {
+      name: "code",
+      label: "电压等级",
+      type: "select",
+      options: [],
+    },
+  ],
 };
 export default {
   data() {
-    return { tableOptions, fromOptions, treeOptions };
+    return {
+      tableOptions,
+    };
   },
   methods: {
-    rowClick(row) {
-      console.log(row);
+    getInputParams(params) {
+      console.log(params);
     },
-    rowDblclick(row) {
-      console.log(row);
+    getRow(data, type, device) {
+      this.$emit("on-operation", { type, data, device });
     },
-    selectionChange(selection) {
-      console.log(selection);
-    },
-    getRow(row) {
-      console.log(row);
+    selectOption({ nodeArr, item }) {
+      console.log(nodeArr);
+      console.log(item);
+      this.tableOptions.param.id = 1;
     },
   },
+  created() {},
 };
 </script>
-<style lang='scss'>
+<style lang='less'>
 </style>

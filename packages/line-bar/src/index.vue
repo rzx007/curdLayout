@@ -58,6 +58,15 @@ export default {
       type: String,
       default: "date",
     },
+    layout:{
+      type:Object,
+      default:function(){
+        return {
+          with:'100%',
+          height:'100%'
+        }
+      }
+    }
   },
   methods: {
     getData() {},
@@ -177,6 +186,7 @@ export default {
 </script>
 <style lang='less'>
 .chart-list {
+  height: 100%;
   background-color: #f4f4ff;
   box-sizing: border-box;
   border-radius: 4px;

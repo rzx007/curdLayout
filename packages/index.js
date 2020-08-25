@@ -6,8 +6,10 @@ import curdLayout from './curd-layout'
 import elButton from './button'
 import elCurdLayout from './el-curd-layout'
 import stackSlide from './tantan-slide'
+import {Container,Box}  from './grid'
 import dynamicComponent from './DynamicComponents'
 import LineBar from './line-bar'
+console.log(Container);
 // 存储组件列表
 const components = [
     colorPicker,
@@ -15,6 +17,8 @@ const components = [
     elButton,
     elCurdLayout,
     stackSlide, 
+    Container,
+    Box,
     LineBar,
      dynamicComponent
 ]
@@ -42,6 +46,8 @@ export default {
     elButton,
     elCurdLayout,
     stackSlide,
+    Container,
+    Box,
     LineBar,
     dynamicComponent
 }
