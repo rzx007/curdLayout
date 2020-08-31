@@ -59,7 +59,7 @@ export default {
     },
     margin: {
       type: Number,
-      default: 5,
+      default: 12,
     },
     outerMargin: {
       type: Number,
@@ -79,11 +79,15 @@ export default {
       required: false,
       default() {
         return {
-          w: 1,
-          h: 1,
+          w: 4,
+          h: 3,
         };
       },
     },
+    isEditable: {
+      type: Boolean,
+      default: true,
+    }, //是否可编辑
     fixLayoutOnLoad: {
       type: Boolean,
       required: false,
@@ -492,6 +496,7 @@ export default {
       });
 
       box.$on("resizeEnd", (evt) => {
+        const $box = evt.target;
         if (!isResizing) {
           return;
         }
@@ -542,10 +547,14 @@ export default {
         this.resizing.offset.y = 0;
 
         this.placeholder.hidden = true;
-
+        box.$emit("afterResize", {
+          height: $box.clientHeight,
+          width: $box.clientWidth,
+        });
         this.$emit("resize:end", newLayout);
       });
     },
+    //
     createBoxLayout(...boxIds) {
       boxIds = boxIds.filter((boxId) => !this.getBoxLayoutById(boxId));
 
@@ -558,6 +567,7 @@ export default {
               {
                 id: boxId,
                 hidden: false,
+                pinned: false,
                 position: {
                   x: 0,
                   y: 0,

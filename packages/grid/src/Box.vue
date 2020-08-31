@@ -1,7 +1,7 @@
 <template>
   <div :class="classes" :style="style" ref="dragHandle">
     <slot></slot>
-    <div class="resize-handle" ref="resizeHandle"></div>
+    <div class="resize-handle" ref="resizeHandle" v-show="editbtn"></div>
   </div>
 </template>
 
@@ -10,6 +10,7 @@
   position: absolute;
   z-index: 1;
   box-sizing: border-box;
+  /* overflow: hidden; */
 }
 
 .axe-grid-box.dragging,
@@ -26,10 +27,12 @@
   position: absolute;
   right: -5px;
   bottom: -5px;
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   cursor: se-resize;
-  border-radius: 50%;
+  border: 1px solid blueviolet;
+  /* border-radius: 50%; */
+  /* background-color: blueviolet; */
 }
 
 @media only screen and (max-width: 1366px) {
@@ -96,6 +99,12 @@ export default {
         "resize.visible": this.resizeVisible,
       };
     },
+    editbtn() {
+      if (this.container) {
+        return this.container.isEditable;
+      }
+      return true;
+    },
   },
   methods: {
     //   访问父实例
@@ -118,7 +127,9 @@ export default {
 
     // register component on parent
     this.container.registerBox(this);
-
+    if (!this.container.isEditable) {
+      return;
+    }
     // 拖拽移动 moving
     this.$dragHandle = this.$el || this.$refs.dragHandle;
 
@@ -190,7 +201,8 @@ export default {
             x: (evt.clientX || evt.changedTouches[0].pageX) - positionX,
             y: (evt.clientY || evt.changedTouches[0].pageY) - positionY,
           };
-          this.$emit("resizeEnd", { offset });
+          this.$emit("resizeEnd", { offset, target: this.$refs.dragHandle });
+          console.log(this.$refs.dragHandle.clientHeight);
         };
 
         const handleMoveResize = (evt) => {

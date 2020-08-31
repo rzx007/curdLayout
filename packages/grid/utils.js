@@ -1,4 +1,4 @@
-// reactive box layout update
+// 更新box
 export const updateBoxLayout = (boxLayout, data) => {
     return {
         ...boxLayout,
@@ -6,7 +6,7 @@ export const updateBoxLayout = (boxLayout, data) => {
     }
 }
 
-// reactive box position update
+// 更新box位置
 export const updateBoxPosition = (boxLayout, data) => {
     return updateBoxLayout(boxLayout, {
         position: {

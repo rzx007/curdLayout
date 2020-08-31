@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="chart-list">
+    <div class="chart-list" :style="{height:height+'px'}">
       <h5 class="chart-title">
         {{name}}
         <Icon type="ios-alert-outline" class="chart-icon" />
@@ -13,8 +13,9 @@
           size="small"
           @on-change="changeGetData"
         ></DatePicker>
+        {{randomId}}
       </h5>
-      <div :id="randomClass" class="chart-item"></div>
+      <div :id="randomClass" :style="{height:(height - 40)+'px'}" class="chart-item"></div>
     </div>
   </div>
 </template>
@@ -22,7 +23,7 @@
 <script>
 // 按需映入
 // 引入 ECharts 主模块
-import echarts from "echarts/lib/echarts"
+import echarts from "echarts/lib/echarts";
 // 引入柱状图
 import "echarts/lib/chart/line";
 // 引入提示框和标题组件
@@ -35,7 +36,7 @@ export default {
       randomClass: "chart" + Math.random(),
       format: "yyyy-MM-dd",
       date: "2020-08-24",
-      charts: {},
+      chart: {},
       apiName: "",
       isDialogTable: false,
       isDialogWarning: false,
@@ -58,15 +59,14 @@ export default {
       type: String,
       default: "date",
     },
-    layout:{
-      type:Object,
-      default:function(){
-        return {
-          with:'100%',
-          height:'100%'
-        }
-      }
-    }
+    randomId: {
+      type: Number,
+      default: null,
+    },
+    height: {
+      type: Number,
+      default: null,
+    },
   },
   methods: {
     getData() {},
@@ -95,7 +95,7 @@ export default {
           nameTextStyle: { fontSize: 20 },
           nameGap: 26,
           nameLocation: "middle",
-           data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
         },
         yAxis: {
           axisLabel: {
@@ -114,19 +114,7 @@ export default {
             smooth: true,
             symbol: "star",
             symbolSize: 8,
-            // markPoint: {
-            //   symbolSize: 80,
-            //   data: [{ type: "min", name: "最小值" }],
-            //   itemStyle: {
-            //     normal: {
-            //       label: {
-            //         show: true,
-            //         fontSize: 15
-            //       }
-            //     }
-            //   }
-            // },
-            data: [5, 20, 36, 10, 10, 20]
+            data: [5, 20, 36, 10, 10, 20],
           },
         ],
       };
@@ -180,13 +168,23 @@ export default {
     this.getData();
   },
   mounted() {
-    this.getCharts();
+    setInterval(() => {
+       this.getCharts();
+      //  this.chart.resize();
+    }, 1000);
+  },
+  watch: {
+    randomId: function () {
+      setTimeout(() => {
+        console.log("resize");
+        this.chart.resize();
+      }, 200);
+    },
   },
 };
 </script>
 <style lang='less'>
 .chart-list {
-  height: 100%;
   background-color: #f4f4ff;
   box-sizing: border-box;
   border-radius: 4px;
@@ -201,7 +199,6 @@ export default {
     font-size: 14px;
   }
   .chart-item {
-    height: 220px;
     width: 100%;
   }
 }

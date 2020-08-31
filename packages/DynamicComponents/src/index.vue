@@ -1,7 +1,14 @@
 
 <template>
   <div class="comps">
-    <component :is="component" @clickEvent="getPropsData" v-if="component" v-bind="data"></component>
+    <component
+      :is="component"
+      @clickEvent="getPropsData"
+      v-if="component"
+      :randomId="randomId"
+      :height="height"
+      v-bind="data"
+    ></component>
   </div>
 </template>
 
@@ -11,6 +18,8 @@ export default {
   data() {
     return {
       component: "",
+      randomId: null,
+      height: 200,
     };
   },
   // props: ["componentName", "data"],
@@ -21,9 +30,8 @@ export default {
         return true;
       },
     },
-    componentPath: {
-      type: String,
-    },
+    componentPath: { type: String },
+    isEdited: { type: Boolean, default: true },
     data: {
       type: Object,
       default: function () {
@@ -43,6 +51,9 @@ export default {
         ? () => import(`@/${this.componentPath}.vue`)
         : "";
     },
+    layout() {
+      return this.height;
+    },
   },
   mounted() {
     if (this.componentPath) {
@@ -56,6 +67,20 @@ export default {
     } else {
       this.component = this.componentName;
     }
+    this.$nextTick(() => {
+      const MIN_HEIGHT = 32;
+      if (this.$parent) {
+      
+
+        this.$parent.$on("afterResize", (evt) => {
+          console.log(evt);
+          // this.component.chart.resize();
+          this.randomId = Math.random();
+          this.height = this.isEdited ? evt.height - MIN_HEIGHT : evt.height;
+          console.log(evt.height);
+        });
+      }
+    });
   },
 };
 </script>

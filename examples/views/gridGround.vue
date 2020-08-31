@@ -15,7 +15,7 @@
       :bubbleUp="bubbleUp"
       :isEditable="isEditable"
     >
-      <grid-box boxId="settings" dragSelector="div.card-header">
+      <grid-box   @resizeEnd="event" boxId="settings" dragSelector="div.card-header">
         <div class="card demo-box">
           <div class="card-header">Settings</div>
           <div class="card-body">
@@ -56,16 +56,20 @@
         </div>
       </grid-box>
       <grid-box
-        v-for="(number,index) in boxCount"
-        :boxId="number"
-        :key="number"
-        dragSelector="div.card-header"
+        v-for="(item,index) in boxContainer"
+        :boxId="item.id"
+        :key="index"
         :resizeVisible="true"
         @resizeEnd="event"
+        ref="boxs"
       >
-        <div class="card demo-box">
-          <div class="card-header">Box {{ number }}</div>
-          <dynamic-component componentName="line-bar" :key="index"></dynamic-component>
+        <div class="box-mian">
+          <div class="box-tool" v-if="isEditable"></div>
+          <dynamic-component
+            :componentName="item.componentName"
+            :isEdited="isEditable"
+            :key="index"
+          ></dynamic-component>
         </div>
       </grid-box>
     </grid-container>
@@ -91,13 +95,14 @@ export default {
       maxRowCount: Infinity,
       bubbleUp: true,
       margin: 25,
-      boxCount: 4,
-      isEditable:true,
+      boxCount: 5,
+      isEditable: true,
       layout: [
+        //Box的布局位置
         {
           id: "settings",
           hidden: false,
-          pinned: true,
+          pinned: false,
           position: {
             x: 0,
             y: 0,
@@ -105,51 +110,9 @@ export default {
             h: 4,
           },
         },
-        {
-          id: 1,
-          hidden: false,
-          pinned: false,
-          position: {
-            x: 4,
-            y: 0,
-            w: 2,
-            h: 3,
-          },
-        },
-        {
-          id: 2,
-          hidden: false,
-          pinned: false,
-          position: {
-            x: 6,
-            y: 0,
-            w: 3,
-            h: 3,
-          },
-        },
-        {
-          id: 3,
-          hidden: false,
-          pinned: false,
-          position: {
-            x: 0,
-            y: 4,
-            w: 4,
-            h: 3,
-          },
-        },
-        {
-          id: 4,
-          hidden: false,
-          pinned: false,
-          position: {
-            x: 4,
-            y: 3,
-            w: 5,
-            h: 3,
-          },
-        }
       ],
+      // Box组件的组件信息
+      boxContainer: [{ id: 0, componentName: "lineBar" }],
     };
   },
 
@@ -175,5 +138,18 @@ export default {
       console.log(val);
     },
   },
+  mounted() {
+    console.log(this.$refs.boxs);
+  },
 };
 </script>
+<style lang="scss">
+.box-mian {
+  height: 100%;
+  .box-tool {
+    background-color: burlywood;
+    border-radius: 4px;
+    height: 32px;
+  }
+}
+</style>
