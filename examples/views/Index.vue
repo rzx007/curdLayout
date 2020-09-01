@@ -36,7 +36,7 @@ export default {
   padding: 0 !important;
 }
 .el-main {
-  background-color: #e9eef3;
+  background-color: #fdfdfd;
   color: #333;
   min-height: calc(100vh - 62px);
 }

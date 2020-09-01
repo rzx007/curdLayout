@@ -3,9 +3,9 @@ import App from './App.vue'
 import router from './router'
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
-import '../packages/theme-default/src/index.scss';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+
 
 // 导入组件库
 import CurdLayout from '~/index.js'

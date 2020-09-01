@@ -7,16 +7,8 @@ const routeArr = [{
     component: 'slide',
     path: '/slide'
 }, {
-    title: '动态组件',
-    component: 'dynamic',
-    path: '/dynamic'
-},{
-    title: '拖拽布局',
-    component: 'grid',
-    path: '/grid'
-},{
-    title: '拖拽布局演练场',
-    component: 'gridGround',
-    path: '/gridGround'
+    title: '流程图',
+    component: 'flow',
+    path: '/flow'
 }]
 export default routeArr;

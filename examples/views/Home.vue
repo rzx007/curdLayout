@@ -1,6 +1,6 @@
 <template>
   <div class="content_view">
-    <curdLayout
+    <elCurdLayout
       :tableOptions="tableOptions"
       @on-change="getInputParams"
       @on-select-change="selectOption"
@@ -21,7 +21,7 @@
           @click="getRow(Props,2,2)"
         >结果</Button>
       </template>
-    </curdLayout>
+    </elCurdLayout>
   </div>
 </template>
 
