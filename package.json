@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@antv/g6": "^3.7.0",
+    "bootstrap": "^4.5.2",
     "core-js": "^3.6.5",
     "echarts": "^4.8.0",
     "element-ui": "^2.13.2",

@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import { apiGet } from "@/api";
 export default {
   data() {
     return {
@@ -94,9 +93,9 @@ export default {
   props: {
     dataUrl: {},
     param: {},
-    search:{
-      type:Boolean,
-      default:true
+    search: {
+      type: Boolean,
+      default: true,
     },
     defaultProps: {
       type: Object,
@@ -120,16 +119,6 @@ export default {
       this.loading = true;
       let params = Object.assign({}, this.params);
       console.log(params);
-      apiGet(this.dataUrl, params).then((res) => {
-        this.loading = false;
-        if (!res.code === 1) {
-          return;
-        } else {
-          this.treeData = res.data;
-        }
-      }).catch(()=>{
-        this.loading = false;
-      });
     },
     changeSatus() {
       this.toggle = !this.toggle;
@@ -171,7 +160,13 @@ function renderContent(h, { node }) {
       icon = "el-icon-document";
       break;
   }
-  return (
+  // render
+  return h("span", { attrs: { class: "custom-tree-node" } }, [
+    h("i", { attrs: { class: icon } }),
+    node.label,
+  ]);
+  //  JSX
+  /* return (
     <span class="custom-tree-node">
       <span>
         <i class={icon}></i>
@@ -179,6 +174,7 @@ function renderContent(h, { node }) {
       </span>
     </span>
   );
+  */
 }
 </script>
 <style lang="scss" sc>

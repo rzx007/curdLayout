@@ -8,11 +8,11 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 
 // 导入组件库
-import CurdLayout from '~/index.js'
+import LayOut from '../packages/index.js'
 // 注册组件库
 Vue.use(ViewUI);
 Vue.use(ElementUI);
-Vue.use(CurdLayout)
+Vue.use(LayOut)
 
 Vue.config.productionTip = false
 

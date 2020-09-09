@@ -53,6 +53,7 @@ import CurdTable from "./CurdTable";
 import FromDynamic from "./FromDynamic";
 
 export default {
+  name: "ElCurdLayout",
   data() {
     return {
       slotArr: [],
@@ -108,7 +109,7 @@ export default {
             that.slotArr.push(item);
             console.log("slot=", that.slotArr);
           }
-          if (item.children&&item.children.length > 0) {
+          if (item.children && item.children.length > 0) {
             Maps(item.children);
           }
         });
@@ -123,7 +124,7 @@ export default {
   display: flex;
   .curd_tree_view {
     width: auto;
-    box-shadow: var(--box-shadow);
+    box-shadow: 4px 4px 30px rgba(75, 102, 171, 0.2);
     height: calc(100vh - 170px);
     border-radius: 0 4px 4px 0;
   }
@@ -132,6 +133,7 @@ export default {
     padding: 12px;
     box-sizing: border-box;
     flex: 1;
+    box-shadow: 4px 4px 30px rgba(75, 102, 171, 0.2);
   }
 }
 </style>

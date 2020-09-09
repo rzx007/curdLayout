@@ -63,7 +63,7 @@
         </template>
       </div>
       <div class="btns">
-        <el-button type="primary" size="mini" @click="query()" round v-throttle>查询</el-button>
+        <el-button type="primary" size="mini" @click="query()" round >查询</el-button>
         <slot name="tool"></slot>
       </div>
     </div>
@@ -141,7 +141,7 @@ export default {
         if (this.typeArr.includes(item.type)) {
           item.default
             ? (this.fromData[item.name] = item.default)
-            : (this.fromData[item.name] = this.$day().format(item.format));
+            : (this.fromData[item.name] ='');
           this.$emit("params-change", this.fromData);
         }
       });
@@ -172,7 +172,7 @@ export default {
   background-color: #fff;
   padding: 10px;
   border-radius: 4px;
-   box-shadow: var(--box-shadow);
+  box-shadow: 4px 4px 30px rgba(75, 102, 171, 0.2);
   .curd_tool_content {
     display: flex;
     align-items: flex-start;

@@ -37,7 +37,6 @@
 
 <script>
 import DataTable from "./DataTable";
-import { apiGet } from "@/api";
 export default {
   props: {
     pageAlign: {
@@ -117,19 +116,6 @@ export default {
         this.params
       );
       console.log(params);
-      apiGet(this.dataUrl, params)
-        .then((res) => {
-          this.loading = false;
-          if (!res.code === 1) {
-            return;
-          } else {
-            this.total = res.pojoTotalCount;
-            this.tableData = res.data;
-          }
-        })
-        .catch(() => {
-          this.loading = false;
-        });
     },
     changePage(page) {
       this.pageParam.pageIndex = page;
@@ -158,7 +144,7 @@ export default {
           if (keys.indexOf("slot") > 0) {
             that.slotArr.push(item);
           }
-          if (item.children?.length > 0) {
+          if (item.children && item.children.length > 0) {
             Maps(item.children);
           }
         });
@@ -196,7 +182,7 @@ export default {
 </script>
 <style lang='scss'>
 .curd_table {
-  box-shadow: var(--box-shadow);
+ 
   background-color: #fff;
   padding: 10px;
   margin-top: 20px;
