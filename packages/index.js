@@ -3,16 +3,12 @@
 // 导入组件
 
 import elCurdLayout from './el-curd-layout'
-import stackSlide from './tantan-slide'
 import dynamicComponent from './DynamicComponents'
-import FlowEditor from './flow-editor'
 // 存储组件列表
 const components = [
 
     elCurdLayout,
-    stackSlide,
     dynamicComponent,
-    FlowEditor
 ]
 // 定义 install 方法，接收 Vue 作为参数。如果使用 use 注册插件，则所有的组件都将被注册
 const install = function (Vue) {
@@ -32,9 +28,7 @@ export default {
     install,
     // 以下是具体的组件列表
     elCurdLayout,
-    stackSlide,
     dynamicComponent,
-    FlowEditor
 }
 
 // 参考 

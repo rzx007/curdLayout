@@ -6,6 +6,7 @@
         @nodeClick="treeNodeClick"
         :renderFunction="treeOptions.renderContent"
         :dataUrl="treeOptions.dataUrl"
+        :search="treeOptions.search"
       ></Tree>
     </div>
     <div class="curd_table_view">
@@ -52,7 +53,6 @@ import CurdTable from "./CurdTable";
 import FromDynamic from "./FromDynamic";
 
 export default {
-  name:"ElCurdLayout",
   data() {
     return {
       slotArr: [],
@@ -81,6 +81,7 @@ export default {
     paramsChange(params) {
       this.$emit("params-change", params);
       this.tableOptions.params = Object.assign(
+        {},
         this.tableOptions.params,
         params
       );
@@ -94,21 +95,25 @@ export default {
     query() {
       this.$refs.table.queryData();
     },
+    refresh() {
+      this.$refs.table.queryData();
+    },
     getSlot() {
       var that = this;
       let mColumns = this.tableOptions.columns;
-      function mapItem(mColumns) {
+      function Maps(mColumns) {
         mColumns.forEach((item) => {
           let keys = Object.keys(item);
           if (keys.indexOf("slot") > 0) {
             that.slotArr.push(item);
+            console.log("slot=", that.slotArr);
           }
           if (item.children&&item.children.length > 0) {
-            mapItem(item.children);
+            Maps(item.children);
           }
         });
       }
-      mapItem(mColumns);
+      Maps(mColumns);
     },
   },
 };

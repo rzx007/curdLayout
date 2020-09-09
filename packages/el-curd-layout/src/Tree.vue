@@ -4,11 +4,11 @@
       <i :class="[toggle?'el-icon-arrow-left':'el-icon-arrow-right']" @click="changeSatus"></i>
     </span>
     <div class="tree_main" v-show="toggle">
-      <el-input placeholder="输入关键字进行过滤" size="mini" v-model="filterText"></el-input>
-      <div class="tree_list">
+      <el-input v-if="search" placeholder="输入关键字进行过滤" size="mini" v-model="filterText"></el-input>
+      <div class="tree_list" v-loading="loading">
         <el-tree
           class="filter-tree"
-          :data="data"
+          :data="treeData"
           :props="defaultProps"
           :filter-node-method="filterNode"
           :render-content="renderFunction"
@@ -21,10 +21,12 @@
 </template>
 
 <script>
+import { apiGet } from "@/api";
 export default {
   data() {
     return {
-      data: [
+      loading: false,
+      treeData: [
         {
           id: 1,
           label: "一级 1",
@@ -92,6 +94,10 @@ export default {
   props: {
     dataUrl: {},
     param: {},
+    search:{
+      type:Boolean,
+      default:true
+    },
     defaultProps: {
       type: Object,
       default: function () {
@@ -103,7 +109,28 @@ export default {
       default: renderContent,
     },
   },
+  created() {
+    this.queryData();
+  },
   methods: {
+    queryData() {
+      if (!this.dataUrl || this.loading === true) {
+        return;
+      }
+      this.loading = true;
+      let params = Object.assign({}, this.params);
+      console.log(params);
+      apiGet(this.dataUrl, params).then((res) => {
+        this.loading = false;
+        if (!res.code === 1) {
+          return;
+        } else {
+          this.treeData = res.data;
+        }
+      }).catch(()=>{
+        this.loading = false;
+      });
+    },
     changeSatus() {
       this.toggle = !this.toggle;
       this.$emit("changeSatus", this.toggle); //触发自定义事件
@@ -124,7 +151,7 @@ export default {
   },
 };
 function renderContent(h, { node }) {
-  console.log(node);
+  // console.log(node);
   // eslint-disable-next-line no-unused-vars
   var icon = "el-icon-folder";
   switch (node.level) {
@@ -144,13 +171,7 @@ function renderContent(h, { node }) {
       icon = "el-icon-document";
       break;
   }
-  // render
-  return h("span", { attrs: { class: "custom-tree-node" } }, [
-    h("i", { attrs: { class: icon } }),
-    node.label,
-  ]);
-  //  JSX
-  /* return (
+  return (
     <span class="custom-tree-node">
       <span>
         <i class={icon}></i>
@@ -158,7 +179,6 @@ function renderContent(h, { node }) {
       </span>
     </span>
   );
-  */
 }
 </script>
 <style lang="scss" sc>

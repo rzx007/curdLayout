@@ -37,6 +37,7 @@
 
 <script>
 import DataTable from "./DataTable";
+import { apiGet } from "@/api";
 export default {
   props: {
     pageAlign: {
@@ -83,13 +84,13 @@ export default {
     return {
       loading: false,
       tableData: [
-        // {
-        //   creator: "rzx007",
-        //   id: 12,
-        //   projectName: "name",
-        //   createDate: "12-11",
-        //   description: "w21",
-        // },
+        {
+          creator: "rzx007",
+          id: 12,
+          projectName: "name",
+          createDate: "12-11",
+          description: "w21",
+        },
       ],
       mColumns: [],
       selection: [],
@@ -104,21 +105,31 @@ export default {
   components: { DataTable },
   methods: {
     queryData() {
-      if (!this.dataUrl) {
+      if (!this.dataUrl || this.loading === true) {
         return;
       }
       this.selection = null;
       this.$emit("selection-change", null);
-      if (this.dataUrl == null || this.loading === true) {
-        return;
-      }
+
       this.loading = true;
       let params = Object.assign(
         JSON.parse(JSON.stringify(this.pageParam)),
         this.params
       );
-      this.loading = false;
       console.log(params);
+      apiGet(this.dataUrl, params)
+        .then((res) => {
+          this.loading = false;
+          if (!res.code === 1) {
+            return;
+          } else {
+            this.total = res.pojoTotalCount;
+            this.tableData = res.data;
+          }
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
     changePage(page) {
       this.pageParam.pageIndex = page;
@@ -129,7 +140,7 @@ export default {
       this.queryData();
     },
     rowClick(row) {
-      this.$refs.table.toggleAllSelection();
+      // this.$refs.table.toggleAllSelection();
       this.$emit("row-click", row);
     },
     rowDblclick(row) {
@@ -147,7 +158,7 @@ export default {
           if (keys.indexOf("slot") > 0) {
             that.slotArr.push(item);
           }
-          if (item.children&&item.children.length > 0) {
+          if (item.children?.length > 0) {
             Maps(item.children);
           }
         });

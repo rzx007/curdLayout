@@ -9,13 +9,26 @@
               <el-date-picker
                 :type="item.type"
                 :disabled="item.disabled"
-                :format="item.format?item.format:'yyyy-MM-dd'"
-                :value-format="item.format?item.format:'yyyy-MM-dd'"
                 :placeholder="getPlaceholder(item)"
                 clearable
                 v-model="fromData[item.name]"
                 size="mini"
               ></el-date-picker>
+            </div>
+          </template>
+          <template v-else-if="item.type==='daterange'">
+            <div :key="'item'+index" class="curd_tool_item">
+              <label class="label">{{item.label}}：</label>
+              <el-date-picker
+                v-model="fromData[item.name]"
+                :type="item.type"
+                :disabled="item.disabled"
+                clearable
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                size="mini">
+              </el-date-picker>
             </div>
           </template>
           <template v-else-if="item.type==='select'">
@@ -50,7 +63,7 @@
         </template>
       </div>
       <div class="btns">
-        <el-button type="primary" size="mini" @click="query()" round>查询</el-button>
+        <el-button type="primary" size="mini" @click="query()" round v-throttle>查询</el-button>
         <slot name="tool"></slot>
       </div>
     </div>
@@ -122,13 +135,13 @@ export default {
         for (const key in item) {
           if (key === "name") {
             let str = item[key];
-            this.$set(this.fromData, [str], ""); // 显示设置响应属性
+            this.$set(this.fromData, [str], "");
           }
         }
         if (this.typeArr.includes(item.type)) {
           item.default
             ? (this.fromData[item.name] = item.default)
-            : (this.fromData[item.name] = new Date());
+            : (this.fromData[item.name] = this.$day().format(item.format));
           this.$emit("params-change", this.fromData);
         }
       });
@@ -159,7 +172,7 @@ export default {
   background-color: #fff;
   padding: 10px;
   border-radius: 4px;
-  box-shadow: var(--box-shadow);
+   box-shadow: var(--box-shadow);
   .curd_tool_content {
     display: flex;
     align-items: flex-start;
@@ -178,7 +191,7 @@ export default {
         }
 
         .el-input {
-          width: 200px;
+          width: 180px;
         }
       }
     }
