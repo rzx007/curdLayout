@@ -6,7 +6,6 @@
       @clickEvent="getPropsData"
       v-if="component"
       :randomId="randomId"
-      :height="height"
       v-bind="data"
     ></component>
   </div>
@@ -19,7 +18,6 @@ export default {
     return {
       component: "",
       randomId: null,
-      height: 200,
     };
   },
   // props: ["componentName", "data"],
@@ -48,7 +46,7 @@ export default {
     // 异步组件路径@,无法解析，需要显示填写
     loader() {
       return this.componentPath
-        ? () => import(`@/${this.componentPath}.vue`)
+        ? (resolve) => require([`@/${this.componentPath}.vue`], resolve)
         : "";
     },
     layout() {
@@ -62,25 +60,13 @@ export default {
           this.component = () => this.loader();
         })
         .catch(() => {
-          this.component = () => import(`@/${this.componentPath}.vue`);
+          this.component = (resolve) =>
+            require([`@/${this.componentPath}.vue`], resolve);
         });
     } else {
       this.component = this.componentName;
     }
-    this.$nextTick(() => {
-      const MIN_HEIGHT = 32;
-      if (this.$parent) {
-      
-
-        this.$parent.$on("afterResize", (evt) => {
-          console.log(evt);
-          // this.component.chart.resize();
-          this.randomId = Math.random();
-          this.height = this.isEdited ? evt.height - MIN_HEIGHT : evt.height;
-          console.log(evt.height);
-        });
-      }
-    });
+    this.randomId = Math.random();
   },
 };
 </script>

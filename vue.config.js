@@ -13,7 +13,7 @@ module.exports = {
         resolve: {
           alias: {
             "@": path.resolve(__dirname, 'examples/'),
-            "~": path.resolve(__dirname, 'packages/')
+            "!": path.resolve(__dirname, 'packages/')
           },
         },
       },
